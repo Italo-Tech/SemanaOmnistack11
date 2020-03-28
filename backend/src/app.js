@@ -1,5 +1,6 @@
 const express = require('express'); //Contém todas as funcionalidades do express disponíveis
 const cors = require('cors');
+const { errors } = require('celebrate');
 const routes = require('./routes');
 
 const app = express(); // Criando minha aplicação
@@ -7,9 +8,10 @@ const app = express(); // Criando minha aplicação
 
 app.use(cors());
 app.use(express.json()); // Converter o corpo json no insomnia em javascript
+app.use(errors());
 app.use(routes);
 
-app.listen(3333); // ouvir a porta 3333 - para acessar na web pelo local host
+module.exports = app;
 
 /**
  * Rota / Recurso

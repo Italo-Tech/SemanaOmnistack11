@@ -1,0 +1,11 @@
+<------ TESTE DE INTEGRAÇÃO ------>
+
+Testes de integração são testes que vão testar um fluxo de uma rota inteira da nossa aplicação.
+Ele testa por completo uma funcionalidade da nossa aplicação.
+
+
+<------ TESTE UNITÁRIO ------>
+
+Ele testa um pedaço da nossa aplicação de forma isolada. Ele não 'encosta' no banco de dados,
+não chama API's, não se comunica com outras ferramentas. Ou seja, o teste unitário testa algo próprio da aplicação.
+
