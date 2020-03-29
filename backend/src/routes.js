@@ -9,16 +9,13 @@ const SessionController = require('./Controllers/SessionController');
 
 const routes = express.Router();
 
-routes.post('/sessions', SessionController.create);
+routes.post('/sessions', celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        id: Joi.string().required(),
+    })
+}), SessionController.create);
 
 routes.get('/ongs', OngController.index);
-
-
-/**
- * Query
- * Route
- * Body
- */
 
 // Validação da ONGS
 routes.post('/ongs', celebrate({
@@ -41,34 +38,31 @@ routes.get('/profile', celebrate({
 
 
 // Validação List incidents
-// routes.get('/incidents', incidentController.index);
 routes.get('/incidents', celebrate({
     [Segments.QUERY]: Joi.object().keys({
-        page: Joi.number().required(),
+        page: Joi.number(),
     })
 }), incidentController.index);
 
 
 // Criação dos Incidents
-routes.get('/incidents', incidentController.create);
-// routes.post('/incidents', celebrate({
-//     [Segments.HEADERS]: Joi.object({
-//         authorization: Joi.string().required(),
-//     }).unknown(),
-// **Dica Diego: .set('Authorization', 'aqui tem que ser um id válido')
+routes.post('/incidents', celebrate({
+    [Segments.HEADERS]: Joi.object({
+        authorization: Joi.string().required(),
+    }).unknown(),
+    [Segments.BODY]: Joi.object().keys({
+        title: Joi.string().required().max(40),
+        description: Joi.string().required().max(250),
+        value: Joi.number().required(),
+    })
+}), incidentController.create);
 
-//     [Segments.BODY]: Joi.object().keys({
-//         title: Joi.string().required(),
-//         description: Joi.string().required(),
-//         value: Joi.number().required(),
-//     })
-// }), incidentController.create);
 
 
 // Validação no Delete
 routes.delete('/incidents/:id', celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-        id: Joi.number(),
+        id: Joi.number().required(),
     })
 }), incidentController.delete);
 
